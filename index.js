@@ -7,7 +7,7 @@ const axios = require("axios");
 const app = express();
 app.use(cors());
 
-const server = ["devweb", "snipy"];
+const server = ["devweb"];
 const prisma = new PrismaClient();
 const client = new Client({ intents: ["GuildPresences", "GuildMembers", "Guilds"] });
 client.login("MTM0NDY3NTI0MTI4NDA3NTU2MA.GKtgB8.LFFR6s3MQO814XfGcAhuxujin7cZWRRj0vkzLE");
