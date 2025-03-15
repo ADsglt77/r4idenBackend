@@ -1,7 +1,7 @@
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const cors = require("cors");
-const {Client} = require("discord.js");
+const { Client } = require("discord.js");
 const axios = require("axios");
 
 const app = express();
@@ -15,13 +15,13 @@ client.login("MTM0NDY3NTI0MTI4NDA3NTU2MA.GKtgB8.LFFR6s3MQO814XfGcAhuxujin7cZWRRj
 app.get("/view", async (req, res) => {
 	res.send({ view: await prisma.view.count() });
 
-    if ((await prisma.view.count({where: {ip: req.ip}})) == 0) {
-        await prisma.view.create({
-            data: {
-                ip: req.ip,
-            },
-        });
-    }
+	if ((await prisma.view.count({ where: { ip: req.ip } })) == 0) {
+		await prisma.view.create({
+			data: {
+				ip: req.ip,
+			},
+		});
+	}
 });
 
 app.get("/discord", async (req, res) => {
@@ -32,14 +32,14 @@ app.get("/discord", async (req, res) => {
 	if (!member) return { precence: "offline", activity: null };
 
 	const a = member.presence?.activities.filter((a) => a.type === 4)[0];
-    return res.send({
-        name: member?.user.username,
-        precence: member?.presence?.status || "offline",
-        activity: {
-            text: a?.state || null,
-            icon: a?.emoji?.imageURL() || null,
-        },
-    });
+	return res.send({
+		name: member?.user.username,
+		precence: member?.presence?.status || "offline",
+		activity: {
+			text: a?.state || null,
+			icon: a?.emoji?.imageURL() || null,
+		},
+	});
 });
 
 app.get("/servers", async (req, res) => {
