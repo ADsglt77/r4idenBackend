@@ -34,6 +34,7 @@ app.get("/discord", async (req, res) => {
 	const a = member.presence?.activities.filter((a) => a.type === 4)[0];
 	return res.send({
 		name: member?.user.username,
+		image: member.displayAvatarURL({ dynamic: true }),
 		precence: member?.presence?.status || "offline",
 		activity: {
 			text: a?.state || null,
