@@ -15,10 +15,11 @@ client.login("MTM0NDY3NTI0MTI4NDA3NTU2MA.GKtgB8.LFFR6s3MQO814XfGcAhuxujin7cZWRRj
 app.get("/view", async (req, res) => {
 	res.send({ view: await prisma.view.count() });
 
-	if ((await prisma.view.count({ where: { ip: req.ip } })) == 0) {
+	const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+	if ((await prisma.view.count({ where: { ip } })) == 0) {
 		await prisma.view.create({
 			data: {
-				ip: req.ip,
+				ip
 			},
 		});
 	}
